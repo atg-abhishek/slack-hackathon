@@ -22,4 +22,5 @@ if client.rtm_connect():
     print(office)
     channel_id = client.server.channels.find(office).id
     history = unicode(client.api_call("channels.history", channel=channel_id))
+    # print(len(json.loads(history)['messages']))
     save_string_as_json_file(filename=office, content=history)
