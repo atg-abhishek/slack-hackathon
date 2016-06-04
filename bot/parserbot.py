@@ -8,7 +8,8 @@ import json
 
 def save_string_as_json_file(filename, content):
   with open('{}.json'.format(filename), 'w') as outfile:
-    json.dump(json.loads(content), outfile)
+    json_content = json.loads(content)
+    json.dump(json_content, outfile)
 
 config = yaml.load(file('parserbot.conf', 'r'))
 api_key = config["SLACK_API_TOKEN"]
@@ -21,6 +22,6 @@ if client.rtm_connect():
   for office in offices:
     print(office)
     channel_id = client.server.channels.find(office).id
-    history = unicode(client.api_call("channels.history", channel=channel_id))
+    history = client.api_call("channels.history", channel=channel_id).replace('\u2019', '\'') # hacky way of fixing encoding with apostrophe
     # print(len(json.loads(history)['messages']))
     save_string_as_json_file(filename=office, content=history)
