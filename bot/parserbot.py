@@ -6,6 +6,10 @@ import time
 import yaml
 import json
 
+def save_string_as_json_file(filename, content):
+  with open('{}.json'.format(filename), 'w') as outfile:
+    json.dump(json.loads(content), outfile)
+
 config = yaml.load(file('parserbot.conf', 'r'))
 api_key = config["SLACK_API_TOKEN"]
 offices = config["OFFICES"]
@@ -18,5 +22,4 @@ if client.rtm_connect():
     print(office)
     channel_id = client.server.channels.find(office).id
     history = client.api_call("channels.history", channel=channel_id)
-    with open('{}.json'.format(office), 'w') as outfile:
-      json.dump(json.loads(history), outfile)
+    save_string_as_json_file(filename=office, content=history)
