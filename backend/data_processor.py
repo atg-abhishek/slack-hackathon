@@ -18,7 +18,7 @@ def process(filename):
 		i = i+1
 	return res
 
-filenames = ["montreal","newyork", "sanfrancisco"]
+filenames = ["montreal","newyork", "sanfrancisco", "london"]
 for filename in filenames:
 	pprint(filename)
 	x = process(filename)
