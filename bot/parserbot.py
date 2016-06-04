@@ -17,9 +17,9 @@ offices = config["OFFICES"]
 client = SlackClient(api_key)
 
 if client.rtm_connect():
-  print("connected")
+  print("Connected:")
   for office in offices:
     print(office)
     channel_id = client.server.channels.find(office).id
-    history = client.api_call("channels.history", channel=channel_id)
+    history = unicode(client.api_call("channels.history", channel=channel_id))
     save_string_as_json_file(filename=office, content=history)
