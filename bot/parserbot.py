@@ -39,12 +39,9 @@ if client.rtm_connect():
             # print last_read[0]
             client.rtm_send_message(message_channel,
                                       "No problem! Please give me a minute to analyze the latest messages. :clock1:")
-            #TODO: call sentiment API
-            # with open('weekly_stats.json') as data_file:
-            #     result = json.load(data_file)
 
-            # result = {"morale"}
             r = requests.get("http://ec2-52-87-240-146.compute-1.amazonaws.com:23001/trigger")
+            # r = requests.get("http://google.com")
             client.rtm_send_message(message_channel,
                                       "Got the results back! Check them out at http://bit.ly/28cy4vX")
       except:
