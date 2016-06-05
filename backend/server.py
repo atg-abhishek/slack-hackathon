@@ -2,6 +2,7 @@ from flask import Flask
 import requests
 from utilities import *
 from indico import *
+from data_processor import *
 
 app = Flask(__name__)
 
@@ -24,6 +25,11 @@ def fetch_emotion():
 @app.route('/city/<city>')
 def fetch_city_data(city):
 	return "this is " + city
+
+@app.route('/trigger')
+def trigger():
+	x = execute()
+	return x
 
 if __name__ == "__main__":
 	app.run(host='localhost', port=23001, debug=True)
