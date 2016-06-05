@@ -1,4 +1,6 @@
-from flask import Flask 
+from flask import Flask
+from flask import Markup
+from flask import render_template
 import requests
 from utilities import *
 from indico import *
@@ -9,6 +11,12 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
 	return "Welcome to the Slack winning team"
+
+@app.route("/chart/<city>")
+def chart(city):
+    labels = ["January","February","March","April","May","June","July","August"]
+    values = [10,9,8,7,6,4,7,8]
+    return render_template('chart.html', values=values, labels=labels)
 
 @app.route('/keywords')
 def fetch_keywords():
