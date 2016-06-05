@@ -5,6 +5,7 @@ from slackclient import SlackClient
 import time
 import yaml
 import json
+import requests
 
 def save_string_as_json_file(filename, content):
   with open('{}.json'.format(filename), 'w') as outfile:
@@ -39,7 +40,13 @@ if client.rtm_connect():
             client.rtm_send_message(message_channel,
                                       "No problem! Please give me a minute to analyze the latest messages. :clock1:")
             #TODO: call sentiment API
-            #TODO: return
+            # with open('weekly_stats.json') as data_file:
+            #     result = json.load(data_file)
+
+            # result = {"morale"}
+            r = requests.get("http://ec2-52-87-240-146.compute-1.amazonaws.com:23001/trigger")
+            client.rtm_send_message(message_channel,
+                                      "Got the results back! Check them out at http://bit.ly/28cy4vX")
       except:
           pass
     time.sleep(1)
