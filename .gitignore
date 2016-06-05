@@ -3,3 +3,4 @@ instaurant.pem
 backend/keys.json
 bot/parserbot.conf
 backend/__pycache__/
+*DS_Store
