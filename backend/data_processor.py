@@ -1,5 +1,7 @@
 import simplejson as json 
 from pprint import pprint
+import operator
+from collections import defaultdict
 from indico import * 
 def process(filename):
 	temp = {}
@@ -34,6 +36,84 @@ def execute():
 	except:
 		return "failed"
 
-def keyword_cloud(city):
-	temp = []
-	with open("../datafiles/processed_"+city+".json") as infile:
+def keyword_cloud():
+	filenames = ["montreal","newyork", "sanfrancisco", "london"]
+	d = defaultdict(list)
+	for f in filenames:
+		temp = {}
+		pprint(f)
+		with open('../datafiles/processed_'+f+'.json') as infile:
+			temp = json.load(infile)
+		data = temp['data']
+		for x in data: 
+			kws = x['keywords']
+			for k in kws:
+				d[k[0]].append(k[1])
+	result = []
+	for a,b in d.items():
+		result.append([a, len(b) ])
+	return result
+
+def generate_word_cloud():
+	x = keyword_cloud()
+	xy = sorted(x, key=operator.itemgetter(1), reverse=True)
+	f = open('output.txt','w')
+	for a in xy:
+		f.write(a[0]*a[1])
+		f.write("\n")	
+
+# def pre_chart_data(city):
+# 	temp = {}
+# 	with open('../datafiles/'+city+".json") as infile:
+# 		temp = json.load(infile)
+# 	messages = temp['messages']
+# 	pprint(messages)
+# 	messages = messages[::-1]
+# 	ts = []
+# 	for m in messages:
+# 		ts.append(float(m['ts']))
+# 	mintime = min(ts)
+# 	maxtime = max(ts)
+# 	interval = (maxtime-mintime)/10
+# 	# pprint(interval)
+# 	block = mintime
+# 	chart_data = []
+# 	x=0
+# 	pprint('entering while blcok')
+# 	while(x<len(messages)):
+# 		block = block + interval
+# 		total = 0
+# 		i = 0
+# 		while(float(messages[x]['ts'])<block):
+# 			pprint(m['text'])
+# 			val = get_sentiments(m['text'])
+# 			total = total + float(val)
+# 			i = i+1
+# 			x= x +1
+# 			pprint("i " + str(i) )
+# 			pprint("x " + str(x))
+# 		chart_data.append(total/i)
+# 	pprint(chart_data)
+
+def pre_chart_data(city):
+	temp = {}
+	with open('../datafiles/processed_'+city+'.json') as infile:
+		temp = json.load(infile)
+	data = temp['data']
+	interval = len(data)/10
+	chart_data = []
+	for i in range(1,11):
+		total = 0
+
+		for x in range(0,int(interval+1)):
+			total = total + float(data[i+x]['val'])
+		chart_data.append(total/interval)
+
+
+	return chart_data
+
+# def generate_chart_data(city):
+# 	with open('')
+
+
+# pre_chart_data('london')

@@ -34,14 +34,16 @@ def get_emotions(sentence=""):
 	url = "https://apiv2.indico.io/emotion?key="+api_key
 	try:
 		r = requests.post(url, data={"data" : sentence})
+		# pprint(r.text)
 		val = r.json()['results']
+		# pprint(type(val))
 		sorted_val = sorted(val.items(), key=operator.itemgetter(1), reverse=True)
 		res = [sorted_val[0], sorted_val[1]]
 		return res
 	except:
 		return "null"
 
-# x = get_emotion("well this is such an interesting thing, let's talk more about this tomorrow")
+# x = get_emotions("well this is such an interesting thing, let's talk more about this tomorrow")
 # pprint(x)
 # pprint(str(x[0][1]) + " " + str(x[1][1]))
 
