@@ -18,13 +18,18 @@ def process(filename):
 		i = i+1
 	return res
 
-filenames = ["montreal","newyork", "sanfrancisco", "london"]
-for filename in filenames:
-	pprint(filename)
-	x = process(filename)
-	total=0
-	for item in x:
-		total = total + item['val']
-	average = total/len(x)
-	with open("../datafiles/processed_"+filename+".json",'w') as outfile:
-		json.dump({"data": x, "average" : average}, outfile)
+def execute():
+	filenames = ["montreal","newyork", "sanfrancisco", "london"]
+	try:
+		for filename in filenames:
+			pprint(filename)
+			x = process(filename)
+			total=0
+			for item in x:
+				total = total + item['val']
+			average = total/len(x)
+			with open("../datafiles/processed_"+filename+".json",'w') as outfile:
+				json.dump({"data": x, "average" : average}, outfile)
+		return "success"
+	except:
+		return "failed"
