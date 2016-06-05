@@ -109,11 +109,24 @@ def pre_chart_data(city):
 			total = total + float(data[i+x]['val'])
 		chart_data.append(total/interval)
 
-
+	# pprint(chart_data)
 	return chart_data
+
+def sales_data(city):
+	
+	if city=='montreal':
+		return [145555,157341,165420,170132,172998,179564,186004,193321,200012,199922]
+	if city=='london':
+		return [165555,160361,165420,160767,155398,152564,149304,147111,145042,142333]
+	if city=='sanfrancisco':
+		return [164555,160361,165420,160767,166398,167564,163304,162111,170042,171333]
+	if city=='newyork':
+		return [150555,157341,158420,1580132,161998,162564,165004,161321,163412,166922]
 
 # def generate_chart_data(city):
 # 	with open('')
 
 
-# pre_chart_data('london')
+# pre_chart_data('montreal')
+# pre_chart_data('sanfrancisco')
+# pre_chart_data('newyork')
