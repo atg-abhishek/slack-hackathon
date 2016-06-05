@@ -13,10 +13,33 @@ def hello():
 	return "Welcome to the Slack winning team"
 
 @app.route("/chart/<city>")
-def chart(city):
-    labels = ["January","February","March","April","May","June","July","August"]
-    values = [10,9,8,7,6,4,7,8]
-    return render_template('chart.html', values=values, labels=labels)
+def index(city):
+  chartID = 'chart_ID'
+  chart_type = 'line'
+  chart_height = 350
+
+  chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+  # series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
+  title = {
+            "text": 'Two Week Team Morale',
+            "x": -20 #center
+        }
+  xAxis = {"categories": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri']}
+  yAxis = {"title": {"text": 'yAxis Label'},
+              "plotLines": [{
+                "value": 0,
+                "width": 1,
+                "color": '#808080'
+            }]}
+  series = [{
+            "name": city.upper(),
+            "data": pre_chart_data(city)
+        }]
+  return render_template('index.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+
+    # labels = ["January","February","March","April","May","June","July","August"]
+    # values = [10,9,8,7,6,4,7,8]
+    # return render_template('chart.html', values=values, labels=labels)
 
 @app.route('/keywords')
 def fetch_keywords():
