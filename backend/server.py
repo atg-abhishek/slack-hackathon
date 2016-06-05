@@ -53,9 +53,9 @@ def fetch_categories():
 def fetch_emotion():
 	return ""
 
-@app.route('/city/<city>')
-def fetch_city_data(city):
-	return "this is " + city
+# @app.route('/city/<city>')
+# def fetch_city_data(city):
+# 	return "this is " + city
 
 @app.route('/trigger')
 def trigger():
