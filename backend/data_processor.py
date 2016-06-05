@@ -33,3 +33,7 @@ def execute():
 		return "success"
 	except:
 		return "failed"
+
+def keyword_cloud(city):
+	temp = []
+	with open("../datafiles/processed_"+city+".json") as infile:
